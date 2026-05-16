@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Mi BRIOVIDA - App de bienestar natural inspirada en la Amazonía">
+    <meta name="theme-color" content="#10b981">
+    <title>Mi BRIOVIDA | Bienestar Natural</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <script type="module" crossorigin src="/mibriovida/assets/index-Bh38t-wu.js"></script>
+  <link rel="stylesheet" crossorigin href="/mibriovida/assets/index-BKg4Zud8.css">
+</head>
+<body class="safe-area-bottom">
+
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="fixed inset-0 z-[200] bg-white flex flex-col items-center justify-center">
+        <div class="w-16 h-16 brio-gradient rounded-2xl flex items-center justify-center text-white text-3xl mb-6 animate-pulse">
+            <i class="fas fa-leaf"></i>
+        </div>
+        <div class="loading-spinner"></div>
+        <p class="text-slate-500 mt-4 font-medium">Cargando BRIOVIDA...</p>
+    </div>
+
+    <!-- Onboarding -->
+    <div id="onboarding" class="fixed inset-0 z-[100] bg-white hidden flex-col p-10 items-center justify-center text-center">
+        <div class="w-28 h-28 brio-gradient rounded-[2.5rem] flex items-center justify-center text-white text-5xl mb-10 shadow-2xl animate-bounce">
+            <i class="fas fa-leaf"></i>
+        </div>
+        <h1 class="text-4xl font-bold text-slate-800 mb-4 tracking-tight">Bienvenido a BRIOVIDA</h1>
+        <p class="text-slate-500 mb-10 max-w-xs leading-relaxed">Personaliza tu viaje hacia el bienestar natural inspirado en la Amazonía.</p>
+
+        <div class="w-full space-y-5 max-w-sm">
+            <div class="relative">
+                <input type="text" id="setup-name" placeholder="¿Cuál es tu nombre?" class="w-full p-5 rounded-2xl bg-slate-100 border-none focus:ring-2 focus:ring-emerald-500 transition-all outline-none focus-ring" aria-label="Tu nombre">
+                <div id="name-error" class="text-red-500 text-xs mt-1 hidden">Por favor ingresa tu nombre</div>
+            </div>
+            <select id="setup-goal" class="w-full p-5 rounded-2xl bg-slate-100 border-none focus:ring-2 focus:ring-emerald-500 appearance-none outline-none focus-ring" aria-label="Tu objetivo principal">
+                <option value="bienestar">Bienestar General</option>
+                <option value="energia">Aumentar Energía</option>
+                <option value="enfoque">Claridad Mental</option>
+                <option value="recuperacion">Recuperación Física</option>
+            </select>
+            <button id="btn-finish-onboarding" data-action="finish-onboarding" class="w-full brio-gradient text-white font-bold p-5 rounded-2xl shadow-xl shadow-emerald-200 btn-press focus-ring" aria-label="Comenzar mi viaje">
+                Comenzar mi viaje
+            </button>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-md glass-card px-8 py-5 flex justify-between items-center z-50 rounded-[2.5rem] border border-white/60 safe-area-bottom">
+        <button data-action="switch-tab" class="nav-link text-slate-300 transition-all nav-active focus-ring" data-tab="inicio" aria-label="Inicio">
+            <i class="fas fa-house-chimney text-xl"></i>
+        </button>
+        <button data-action="switch-tab" class="nav-link text-slate-300 transition-all focus-ring" data-tab="rutina" aria-label="Rutina">
+            <i class="fas fa-calendar-check text-xl"></i>
+        </button>
+        <button data-action="switch-tab" class="nav-link text-slate-300 transition-all focus-ring" data-tab="formulas" aria-label="Fórmulas">
+            <i class="fas fa-flask-vial text-xl"></i>
+        </button>
+        <button data-action="switch-tab" class="nav-link text-slate-300 transition-all focus-ring" data-tab="perfil" aria-label="Perfil">
+            <i class="fas fa-circle-user text-xl"></i>
+        </button>
+    </nav>
+
+    <main class="pb-32 pt-12 px-6 max-w-xl mx-auto min-h-screen">
+
+        <!-- INICIO VIEW -->
+        <section id="inicio-view" class="tab-view space-y-8 animate-fade">
+            <header class="flex justify-between items-center">
+                <div>
+                    <p class="text-slate-400 font-bold text-[10px] uppercase tracking-[0.2em]" id="current-date">Cargando...</p>
+                    <h2 class="text-3xl font-bold text-slate-800 tracking-tight">Hola, <span id="user-name-display">Naturalista</span></h2>
+                </div>
+                <button id="btn-notifications" data-action="notifications" class="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center text-emerald-500 border border-slate-100 focus-ring" aria-label="Notificaciones">
+                    <i class="fas fa-bell"></i>
+                    <span id="notification-badge" class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-white text-xs flex items-center justify-center hidden">!</span>
+                </button>
+            </header>
+
+            <!-- Brio Score Card -->
+            <div class="glass-card w-full p-10 rounded-[3rem] flex flex-col items-center gap-6 relative overflow-hidden">
+                <div class="relative">
+                    <svg class="w-48 h-48" role="img" aria-labelledby="score-title">
+                        <title id="score-title">Indicador de Brio Score</title>
+                        <circle class="text-slate-100" stroke-width="12" stroke="currentColor" fill="transparent" r="80" cx="96" cy="96"/>
+                        <circle class="text-emerald-500 progress-ring__circle" id="score-ring" stroke-width="12" stroke-dasharray="502.6" stroke-dashoffset="502.6" stroke-linecap="round" stroke="currentColor" fill="transparent" r="80" cx="96" cy="96"/>
+                    </svg>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center">
+                        <span class="text-5xl font-black text-slate-800" id="brio-score-val" aria-live="polite">0</span>
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Brio Score</span>
+                    </div>
+                </div>
+                <p class="text-sm text-slate-500 text-center font-medium leading-relaxed max-w-[220px]" id="daily-status">
+                    Tu vitalidad natural hoy está al <span id="status-percent">0%</span>.
+                </p>
+                <div class="flex gap-2">
+                    <button id="btn-share-score" data-action="share-score" class="px-4 py-2 bg-emerald-100 text-emerald-700 rounded-xl text-sm font-bold btn-press focus-ring" aria-label="Compartir score">
+                        <i class="fas fa-share-alt mr-2"></i>Compartir
+                    </button>
+                </div>
+            </div>
+
+            <!-- Metrics Grid -->
+            <div class="grid grid-cols-2 gap-5">
+                <div id="btn-increment-water" data-action="increment-water" class="glass-card p-6 rounded-[2.5rem] flex flex-col gap-4 btn-press cursor-pointer border-blue-50 hover:shadow-lg transition-shadow focus-ring" tabindex="0" role="button" aria-label="Incrementar agua">
+                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-500 flex items-center justify-center">
+                        <i class="fas fa-droplet"></i>
+                    </div>
+                    <div>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Hidratación</p>
+                        <p class="text-xl font-bold text-slate-800"><span id="water-val">0</span><span class="text-xs text-slate-400 font-normal"> / <span id="water-goal-val">2.0</span>L</span></p>
+                    </div>
+                </div>
+                <div id="btn-increment-steps" data-action="increment-steps" class="glass-card p-6 rounded-[2.5rem] flex flex-col gap-4 btn-press cursor-pointer border-orange-50 hover:shadow-lg transition-shadow focus-ring" tabindex="0" role="button" aria-label="Incrementar pasos">
+                    <div class="w-10 h-10 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center">
+                        <i class="fas fa-walking"></i>
+                    </div>
+                    <div>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Movimiento</p>
+                        <p class="text-xl font-bold text-slate-800"><span id="steps-val">0</span><span class="text-xs text-slate-400 font-normal"> / <span id="steps-goal-val">8k</span></span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mood Support -->
+            <div class="space-y-5">
+                <h3 class="text-lg font-bold text-slate-800 px-2">¿Cómo te sientes hoy?</h3>
+                <div class="flex overflow-x-auto gap-4 pb-4 px-2 snap-x no-scrollbar">
+                    <button data-action="support" data-support="tired" class="snap-start flex-shrink-0 bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 flex flex-col items-center gap-3 w-32 btn-press hover:shadow-md transition-shadow focus-ring" aria-label="Apoyo para cansancio">
+                        <span class="text-3xl">🥱</span>
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-600">Cansado</span>
+                    </button>
+                    <button data-action="support" data-support="stressed" class="snap-start flex-shrink-0 bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 flex flex-col items-center gap-3 w-32 btn-press hover:shadow-md transition-shadow focus-ring" aria-label="Apoyo para estrés">
+                        <span class="text-3xl">🤯</span>
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-600">Estrés</span>
+                    </button>
+                    <button data-action="support" data-support="focus" class="snap-start flex-shrink-0 bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 flex flex-col items-center gap-3 w-32 btn-press hover:shadow-md transition-shadow focus-ring" aria-label="Apoyo para foco">
+                        <span class="text-3xl">🧠</span>
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-600">Foco</span>
+                    </button>
+                    <button data-action="support" data-support="rest" class="snap-start flex-shrink-0 bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 flex flex-col items-center gap-3 w-32 btn-press hover:shadow-md transition-shadow focus-ring" aria-label="Apoyo para descanso">
+                        <span class="text-3xl">🌙</span>
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-600">Sopor</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Daily Tip -->
+            <div class="glass-card p-6 rounded-[2.5rem] bg-gradient-to-r from-emerald-50 to-blue-50 border-emerald-100">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-800 mb-2">Consejo del Día</h4>
+                        <p class="text-sm text-slate-600 leading-relaxed" id="daily-tip">Mantén la consistencia en tus hábitos diarios para ver resultados duraderos.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RUTINA VIEW -->
+        <section id="rutina-view" class="tab-view hidden space-y-6 animate-fade">
+            <div class="flex justify-between items-center">
+                <h2 class="text-3xl font-bold text-slate-800 tracking-tight">Mi Rutina Natural</h2>
+                <button id="btn-add-custom-routine" data-action="add-custom-routine" class="px-4 py-2 bg-emerald-500 text-white rounded-xl text-sm font-bold btn-press focus-ring" aria-label="Añadir rutina personalizada">
+                    <i class="fas fa-plus mr-2"></i>Añadir
+                </button>
+            </div>
+            <p class="text-xs text-slate-500 bg-slate-100 p-4 rounded-2xl border border-slate-200">
+                Registra tus productos BRIOVIDA según tu rutina personal. Sigue siempre las indicaciones del envase.
+            </p>
+            <div id="routine-list" class="space-y-4">
+                <!-- Inyectado por JS -->
+            </div>
+        </section>
+
+        <!-- FÓRMULAS VIEW -->
+        <section id="formulas-view" class="tab-view hidden space-y-6 animate-fade">
+            <h2 class="text-3xl font-bold text-slate-800 tracking-tight">Fórmulas BRIOVIDA</h2>
+            <div class="grid grid-cols-1 gap-4" id="formulas-catalog">
+                <!-- Inyectado por JS -->
+            </div>
+        </section>
+
+        <!-- PERFIL VIEW -->
+        <section id="perfil-view" class="tab-view hidden space-y-8 animate-fade">
+            <div class="flex items-center gap-5 p-2">
+                <div class="w-20 h-20 rounded-[2rem] brio-gradient flex items-center justify-center text-white text-3xl font-bold shadow-xl shadow-emerald-100">
+                    <span id="profile-initial">?</span>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-800" id="profile-name">Cargando...</h2>
+                    <p class="text-emerald-600 text-sm font-bold opacity-80" id="profile-goal-display">Meta Natural</p>
+                </div>
+            </div>
+
+            <!-- Stats Card -->
+            <div class="glass-card p-8 rounded-[2.5rem] space-y-6">
+                <h3 class="font-bold text-slate-800 border-b border-slate-100 pb-3">Tu Progreso</h3>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-emerald-600" id="streak-count">0</div>
+                        <div class="text-xs text-slate-500 uppercase tracking-widest">Días de Racha</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-blue-600" id="total-products">0</div>
+                        <div class="text-xs text-slate-500 uppercase tracking-widest">Productos Usados</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Goals Settings -->
+            <div class="glass-card p-8 rounded-[2.5rem] space-y-6">
+                <h3 class="font-bold text-slate-800 border-b border-slate-100 pb-3">Configuración de Metas</h3>
+                <div class="space-y-5">
+                    <div class="flex justify-between items-center">
+                        <label class="text-xs font-bold text-slate-400 uppercase tracking-widest">Agua Diaria (L)</label>
+                        <input type="number" id="goal-water-input" value="2.0" step="0.5" class="w-20 p-3 bg-slate-50 rounded-xl text-center font-bold outline-none ring-1 ring-slate-100 focus-ring" min="0.5" max="5">
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <label class="text-xs font-bold text-slate-400 uppercase tracking-widest">Pasos Meta</label>
+                        <input type="number" id="goal-steps-input" value="8000" step="500" class="w-20 p-3 bg-slate-50 rounded-xl text-center font-bold outline-none ring-1 ring-slate-100 focus-ring" min="1000" max="50000">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Export Data -->
+            <button id="btn-export-data" data-action="export-data" class="w-full p-5 bg-slate-100 text-slate-700 font-bold text-sm rounded-2xl btn-press border border-slate-200 focus-ring">
+                <i class="fas fa-download mr-2"></i>Exportar Mis Datos
+            </button>
+
+            <!-- Disclaimer -->
+            <div class="p-6 bg-slate-100/50 rounded-3xl text-[11px] text-slate-400 leading-relaxed border border-white">
+                <p class="font-bold uppercase tracking-widest text-slate-500 mb-2">Aviso de Salud y Privacidad</p>
+                <p>Mi BRIOVIDA proporciona información de bienestar y seguimiento de hábitos. No diagnostica, trata ni cura enfermedades. Los datos se guardan localmente en su dispositivo. Consulte a un profesional de salud antes de usar suplementos.</p>
+            </div>
+
+            <!-- Reset App -->
+            <button id="btn-show-reset" data-action="show-reset" class="w-full p-5 text-red-500 font-bold text-sm bg-red-50/50 rounded-2xl btn-press border border-red-100 focus-ring" aria-label="Reiniciar aplicación">
+                Reiniciar Aplicación
+            </button>
+        </section>
+    </main>
+
+    <!-- Modal Container -->
+    <div id="modal-container" class="fixed inset-0 z-[110] hidden items-center justify-center p-6 transition-all duration-300">
+        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-md" data-action="close-modal"></div>
+        <div class="glass-card w-full max-w-sm rounded-[3rem] p-10 relative z-10 scale-95 opacity-0 transition-all duration-300" id="modal-box">
+            <div id="modal-content" class="text-center space-y-4"></div>
+            <button data-action="close-modal" class="mt-10 w-full p-5 bg-slate-100 rounded-2xl font-bold btn-press focus-ring">Entendido</button>
+        </div>
+    </div>
+
+    <!-- Reset Confirmation Modal -->
+    <div id="reset-modal" class="fixed inset-0 z-[120] hidden items-center justify-center p-6">
+        <div class="absolute inset-0 bg-slate-900/80 backdrop-blur-md" data-action="close-modal"></div>
+        <div class="glass-card w-full max-w-sm rounded-[3rem] p-10 relative z-10">
+            <div class="text-center space-y-4">
+                <div class="text-6xl text-red-500 mb-4">⚠️</div>
+                <h3 class="text-2xl font-bold text-slate-800">¿Reiniciar Aplicación?</h3>
+                <p class="text-slate-500 text-sm leading-relaxed">Esto eliminará todos tus datos y progreso. Esta acción no se puede deshacer.</p>
+            </div>
+            <div class="flex gap-3 mt-10">
+                <button data-action="close-modal" class="flex-1 p-4 bg-slate-100 rounded-2xl font-bold btn-press focus-ring">Cancelar</button>
+                <button data-action="reset-app" class="flex-1 p-4 bg-red-500 text-white rounded-2xl font-bold btn-press focus-ring">Reiniciar</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
